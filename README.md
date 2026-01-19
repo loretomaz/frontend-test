@@ -1,36 +1,73 @@
-## Front-End Developer Test
-Crie um app mobile ou site web que servirá como um blog de publicações e comentários.
+# React + TypeScript + Vite
 
-### O que precisa ser feito:
-- [ ]  Consumir a lista de posts onde:
-    - Cada post possui um autor usuário e deverá ter um título, descrição e informar qual foi o usuário autor;
-    - Cada post pode ter ou não comentários de outros usuários e deverá conter o comentário em si e o nome do usuário que fez o comentário;
-    - Não é obrigatório ter uma imagem o post, mas seria um plus se implementar Lazy Load.
-- [ ]  Deverá ser possível criar um post e um comentário para cada post.
-- [ ]  Deverá ser possível excluir o post.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-**API para consumo:**
+Currently, two official plugins are available:
 
-Posts → [https://jsonplaceholder.typicode.com/posts](https://jsonplaceholder.typicode.com/posts)
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Comentários → [https://jsonplaceholder.typicode.com/comments](https://jsonplaceholder.typicode.com/comments)
+## React Compiler
 
-Usuários → [https://jsonplaceholder.typicode.com/users](https://jsonplaceholder.typicode.com/users)
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-### Critérios de avaliação:
-- [ ]  Gerenciamento de temas e estilos css
-- [ ]  Utilização da linguagem e/ou tecnologia
-- [ ]  Gerenciamento do estado da aplicação, imutabilidade e efeitos colaterais
-- [ ]  Arquitetura, utilização de Design Pattern, performance, escalabilidade e organização
-- [ ]  Implementação de patterns e conceitos
-- [ ]  Árvore de commits do Git
+## Expanding the ESLint configuration
 
-### Não essencial, mas ótimo se tiver também:
-- React ou React Native
-- TypeScript
-- Testes automatizados
-- Crie e execute uma imagem docker da sua aplicação localmente (Web)
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-**Prazo para entrega: 7 dias após o fork do repositório.**
+```js
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-Ao finalizar, abrir um Pull Request neste repositório e notificar pelo mesmo e-mail que você recebeu o teste.
+      // Remove tseslint.configs.recommended and replace with this
+      tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      tseslint.configs.stylisticTypeChecked,
+
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
+
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
