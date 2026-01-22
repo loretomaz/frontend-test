@@ -1,10 +1,10 @@
 import { Box, CircularProgress } from "@mui/material";
 import { styles } from "../homepage/homepage-styles";
 import { useHomepage } from "../homepage/homepage-rules";
-import { PostItem } from "../homepage/components/post";
+import { PostItem } from "./components/post";
 
 export function Homepage() {
-  const { posts, loading, getPostData } = useHomepage();
+  const { posts, loading, getPostData, handleAddComment } = useHomepage();
 
   if (loading) {
     return (
@@ -15,7 +15,7 @@ export function Homepage() {
   }
 
   return (
-    <Box sx={{ padding: 5, maxWidth: "900px", margin: "0 auto" }}>
+    <Box sx={{ padding: 5, maxWidth: "800px", margin: "0 auto" }}>
       {posts.map((post) => {
         const { author, postComments } = getPostData(post);
         return (
@@ -24,6 +24,7 @@ export function Homepage() {
             post={post}
             author={author}
             comments={postComments}
+            onAddComment={handleAddComment}
           />
         );
       })}

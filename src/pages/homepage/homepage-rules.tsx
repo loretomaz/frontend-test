@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getComments } from "../../api/comment";
 import { getPosts } from "../../api/post";
 import { getUsers } from "../../api/user";
+import { createComment } from "../../api/comment";
 import { type IComment } from "../../types/comment";
 import { type IPost } from "../../types/post";
 import { type IUser } from "../../types/user";
@@ -39,5 +40,16 @@ export function useHomepage() {
     };
   };
 
-  return { posts, loading, getPostData };
+  const handleAddComment = async (
+    types: Pick<IComment, "postId" | "email" | "body">,
+  ) => {
+    try {
+      const newComment = await createComment(types);
+      setComments((prev) => [...prev, newComment]);
+    } catch (error) {
+      console.error("Error sending new comment", error);
+    }
+  };
+
+  return { posts, loading, getPostData, handleAddComment };
 }

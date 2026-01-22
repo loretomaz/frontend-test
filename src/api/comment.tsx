@@ -14,3 +14,13 @@ export async function getComments(): Promise<IComment[]> {
     console.log("Search finalized.");
   }
 }
+
+export const createComment = async (
+  data: Pick<IComment, "postId" | "email" | "body">,
+) => {
+  const response = await axios.post(
+    "https://jsonplaceholder.typicode.com/comments",
+    data,
+  );
+  return response.data;
+};

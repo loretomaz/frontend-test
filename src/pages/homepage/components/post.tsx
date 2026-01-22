@@ -4,14 +4,19 @@ import { type IPost } from "../../../types/post";
 import { type IUser } from "../../../types/user";
 import { styles } from "../homepage-styles";
 import { CommentItem } from "./comment";
+import { CommentInput } from "./comment-input";
 
 interface PostProps {
   author?: IUser;
   comments: IComment[];
   post: IPost;
+
+  onAddComment: (
+    types: Pick<IComment, "postId" | "email" | "body">,
+  ) => Promise<void>;
 }
 
-export function PostItem({ post, author, comments }: PostProps) {
+export function PostItem({ post, author, comments, onAddComment }: PostProps) {
   return (
     <Box sx={styles.postContainer}>
       <Box sx={styles.postHeader}>
@@ -33,6 +38,7 @@ export function PostItem({ post, author, comments }: PostProps) {
         ) : (
           <Typography>No comments for this post...</Typography>
         )}
+        <CommentInput postId={post.id} onClick={onAddComment} />
       </Box>
     </Box>
   );
