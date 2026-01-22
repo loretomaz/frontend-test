@@ -24,6 +24,13 @@ export const styles: Record<string, React.CSSProperties> = {
     gap: "10px",
   },
 
+  loadingContainer: {
+    alignItems: "center",
+    display: "flex",
+    height: "100vh",
+    justifyContent: "center",
+  },
+
   postAuthor: {
     color: "#000000",
     display: "flex",
