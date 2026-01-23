@@ -51,5 +51,9 @@ export function useHomepage() {
     }
   };
 
-  return { posts, loading, getPostData, handleAddComment };
+  const handleDeleteComment = (commentId: number) => {
+    setComments(comments.filter((c) => c.id !== commentId));
+  };
+
+  return { posts, loading, getPostData, handleAddComment, handleDeleteComment };
 }

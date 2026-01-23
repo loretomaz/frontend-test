@@ -4,7 +4,8 @@ import { useHomepage } from "../homepage/homepage-rules";
 import { PostItem } from "./components/post";
 
 export function Homepage() {
-  const { posts, loading, getPostData, handleAddComment } = useHomepage();
+  const { posts, loading, getPostData, handleAddComment, handleDeleteComment } =
+    useHomepage();
 
   if (loading) {
     return (
@@ -25,6 +26,7 @@ export function Homepage() {
             author={author}
             comments={postComments}
             onAddComment={handleAddComment}
+            onDelete={handleDeleteComment}
           />
         );
       })}

@@ -14,9 +14,17 @@ interface PostProps {
   onAddComment: (
     types: Pick<IComment, "postId" | "email" | "body">,
   ) => Promise<void>;
+
+  onDelete: (id: number) => void;
 }
 
-export function PostItem({ post, author, comments, onAddComment }: PostProps) {
+export function PostItem({
+  post,
+  author,
+  comments,
+  onAddComment,
+  onDelete,
+}: PostProps) {
   return (
     <Box sx={styles.postContainer}>
       <Box sx={styles.postHeader}>
@@ -33,7 +41,11 @@ export function PostItem({ post, author, comments, onAddComment }: PostProps) {
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {comments.length > 0 ? (
           comments.map((comment) => (
-            <CommentItem key={comment.id} comment={comment} />
+            <CommentItem
+              key={comment.id}
+              comment={comment}
+              onDelete={onDelete}
+            />
           ))
         ) : (
           <Typography>No comments for this post...</Typography>
