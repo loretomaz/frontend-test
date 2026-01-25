@@ -8,11 +8,11 @@ export const styles: Record<string, SxProps<Theme>> = {
     color: "white",
     display: "flex",
     flexShrink: 0,
-    fontSize: "12px",
+    fontSize: "15px",
     fontWeight: "bold",
-    height: "30px",
+    height: "35px",
     justifyContent: "center",
-    width: "30px",
+    width: "35px",
   },
 
   commentBubble: {
@@ -30,6 +30,15 @@ export const styles: Record<string, SxProps<Theme>> = {
   deleteButton: {
     color: "#aaaaaa",
     "&:hover": { color: "#d32f2f" },
+  },
+
+  images: {
+    width: "100%",
+    height: "auto",
+    maxHeight: "450px",
+    objectFit: "cover",
+    borderRadius: "5px",
+    display: "block",
   },
 
   loadingContainer: {
@@ -50,7 +59,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     color: "#000000",
     display: "flex",
     flexDirection: "column",
-    fontSize: "13px",
+    fontSize: "16px",
     fontWeight: "bold",
   },
 
@@ -72,9 +81,9 @@ export const styles: Record<string, SxProps<Theme>> = {
 
   postTitle: {
     color: "#000000",
-    fontSize: "16px",
+    fontSize: "18px",
     fontWeight: "bold",
-    marginBottom: "3px",
+    marginBottom: "5px",
   },
 
   sidebar: {

@@ -21,7 +21,7 @@ export function CommentItem({ comment, onDelete }: CommentProps) {
       <Box sx={styles.commentContainer}>
         <Box sx={styles.avatar}>{comment.email.charAt(0).toUpperCase()}</Box>
         <Box sx={styles.commentBubble}>
-          <Typography sx={{ fontSize: "13px" }}>
+          <Typography sx={{ fontSize: "14px" }}>
             <strong>{comment.email}</strong> {comment.body}
           </Typography>
         </Box>

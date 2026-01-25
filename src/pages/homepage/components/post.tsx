@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography, Divider } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
 import { type IComment } from "../../../types/comment";
@@ -31,6 +31,7 @@ export function PostItem({
   onDeletePost,
 }: PostProps) {
   const [isHovering, setIsHovering] = useState(false);
+  const imageUrl = `https://picsum.photos/seed/${post.id}blog/1980/800`;
 
   return (
     <Box
@@ -42,7 +43,7 @@ export function PostItem({
         <Box sx={styles.avatar}>{author?.name.charAt(0).toUpperCase()}</Box>
         <Box sx={styles.postAuthor}>
           <strong>{author ? author.name : "User unknown..."}</strong>
-          <Typography sx={{ fontSize: "13px" }}>{author?.email}</Typography>
+          <Typography sx={{ fontSize: "15px" }}>{author?.email}</Typography>
         </Box>
         <Box sx={{ flexGrow: 1 }} />
         {Number(post?.userId) === Number(webUser.id) && isHovering ? (
@@ -57,23 +58,46 @@ export function PostItem({
       </Box>
 
       <Typography sx={styles.postTitle}>{post.title}</Typography>
-      <Typography sx={{ marginBottom: "12px", fontSize: "15px" }}>
+      <Typography sx={{ marginBottom: "12px", fontSize: "17px" }}>
         {post.body}
       </Typography>
 
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        {comments.map((comment) => (
-          <CommentItem key={comment.id} comment={comment} onDelete={onDelete} />
-        ))}
-        <CommentInput
-          postId={post.id}
-          onClick={onAddComment}
-          placeholder={
-            comments.length === 0
-              ? "Be the first one to comment!"
-              : "Write a comment..."
-          }
+      <Box sx={{ width: "100%", mb: 2 }}>
+        <Box
+          component="img"
+          src={imageUrl}
+          alt={post.title}
+          sx={styles.images}
         />
+        <Divider
+          textAlign="left"
+          sx={{
+            padding: 2,
+          }}
+        >
+          <Typography sx={{ fontSize: "14px", color: "#666" }}>
+            {comments.length === 0 ? "No comments yet..." : "Comments"}
+          </Typography>
+        </Divider>
+
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          {comments.map((comment) => (
+            <CommentItem
+              key={comment.id}
+              comment={comment}
+              onDelete={onDelete}
+            />
+          ))}
+          <CommentInput
+            postId={post.id}
+            onClick={onAddComment}
+            placeholder={
+              comments.length === 0
+                ? "Be the first one to comment!"
+                : "Write a comment..."
+            }
+          />
+        </Box>
       </Box>
     </Box>
   );
