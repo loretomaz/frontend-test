@@ -2,10 +2,11 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { styles } from "../homepage/homepage-styles";
 import { useHomepage } from "../homepage/homepage-rules";
 import { PostItem } from "./components/post";
-import { PostForm } from "../homepage/components/post-form";
+import { Sidebar } from "./components/sidebar";
 
 export function Homepage() {
   const {
+    users,
     posts,
     loading,
     error,
@@ -37,7 +38,7 @@ export function Homepage() {
   return (
     <Box sx={{ display: "flex", height: "100vh", overflow: "hidden" }}>
       <Box sx={styles.sidebar}>
-        <PostForm onAddPost={handleAddPost} />
+        <Sidebar onAddPost={handleAddPost} users={users} />
       </Box>
 
       <Box sx={styles.mainContent}>

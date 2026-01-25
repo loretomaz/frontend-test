@@ -87,6 +87,7 @@ export function useHomepage() {
   };
 
   return {
+    users,
     posts,
     loading,
     error,

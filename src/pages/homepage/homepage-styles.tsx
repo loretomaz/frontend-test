@@ -78,8 +78,7 @@ export const styles: Record<string, SxProps<Theme>> = {
   },
 
   sidebar: {
-    width: "40%",
-    minWidth: "350px",
+    width: "800px",
     padding: 4,
     borderRight: "1px solid #e0e0e0",
     backgroundColor: "#ffffff",

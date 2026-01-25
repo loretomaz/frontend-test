@@ -46,7 +46,7 @@ export function CommentInput({
       <Button
         variant="contained"
         onClick={handleSubmit}
-        sx={{ backgroundColor: "#000" }}
+        sx={{ backgroundColor: "#000", "&:hover": { backgroundColor: "#333" } }}
       >
         Send
       </Button>
