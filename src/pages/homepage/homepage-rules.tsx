@@ -47,8 +47,14 @@ export function useHomepage() {
     newCommentData: Pick<IComment, "postId" | "email" | "body">,
   ) => {
     try {
+      const commentId = Date.now();
       const newComment = await createComment(newCommentData);
-      setComments((prev) => [...prev, newComment]);
+      const newIdForComment = {
+        ...newComment,
+        postId: newCommentData.postId,
+        id: commentId,
+      };
+      setComments((prev) => [...prev, newIdForComment]);
     } catch {
       setError("We were unable to load the data. Please try again later.");
     }

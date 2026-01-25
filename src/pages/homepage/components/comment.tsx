@@ -3,6 +3,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { styles } from "../homepage-styles";
 import { webUser } from "../../../constants/user";
 import { type IComment } from "../../../types/comment";
+import { useState } from "react";
 
 interface CommentProps {
   comment: IComment;
@@ -10,8 +11,13 @@ interface CommentProps {
 }
 
 export function CommentItem({ comment, onDelete }: CommentProps) {
+  const [isHovering, setIsHovering] = useState(false);
   return (
-    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+    <Box
+      sx={{ display: "flex", alignItems: "center", gap: 1 }}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       <Box sx={styles.commentContainer}>
         <Box sx={styles.avatar}>{comment.email.charAt(0).toUpperCase()}</Box>
         <Box sx={styles.commentBubble}>
@@ -21,11 +27,11 @@ export function CommentItem({ comment, onDelete }: CommentProps) {
         </Box>
       </Box>
 
-      {comment?.email === webUser.email ? (
+      {comment?.email === webUser.email && isHovering ? (
         <IconButton
           size="small"
           onClick={() => onDelete(comment.id)}
-          sx={{ color: "#aaaaaa" }}
+          sx={styles.deleteButton}
         >
           <DeleteIcon fontSize="small" />
         </IconButton>
