@@ -31,26 +31,28 @@ export function PostItem({
         <Box sx={styles.avatar}>{author?.name.charAt(0).toUpperCase()}</Box>
         <Box sx={styles.postAuthor}>
           <strong>{author ? author.name : "User unknown..."}</strong>
-          <Typography sx={{ fontSize: "15px" }}>{author?.email}</Typography>
+          <Typography sx={{ fontSize: "13px" }}>{author?.email}</Typography>
         </Box>
       </Box>
 
       <Typography sx={styles.postTitle}>{post.title}</Typography>
-      <Typography sx={{ marginBottom: "20px" }}>{post.body}</Typography>
+      <Typography sx={{ marginBottom: "12px", fontSize: "15px" }}>
+        {post.body}
+      </Typography>
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-        {comments.length > 0 ? (
-          comments.map((comment) => (
-            <CommentItem
-              key={comment.id}
-              comment={comment}
-              onDelete={onDelete}
-            />
-          ))
-        ) : (
-          <Typography>No comments for this post...</Typography>
-        )}
-        <CommentInput postId={post.id} onClick={onAddComment} />
+        {comments.map((comment) => (
+          <CommentItem key={comment.id} comment={comment} onDelete={onDelete} />
+        ))}
+        <CommentInput
+          postId={post.id}
+          onClick={onAddComment}
+          placeholder={
+            comments.length === 0
+              ? "Be the first one to comment!"
+              : "Write a comment..."
+          }
+        />
       </Box>
     </Box>
   );

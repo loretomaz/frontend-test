@@ -1,6 +1,7 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { styles } from "../homepage-styles";
+import { webUser } from "../../../constants/user";
 import { type IComment } from "../../../types/comment";
 
 interface CommentProps {
@@ -14,13 +15,13 @@ export function CommentItem({ comment, onDelete }: CommentProps) {
       <Box sx={styles.commentContainer}>
         <Box sx={styles.avatar}>{comment.email.charAt(0).toUpperCase()}</Box>
         <Box sx={styles.commentBubble}>
-          <Typography sx={{ fontSize: "15px" }}>
+          <Typography sx={{ fontSize: "13px" }}>
             <strong>{comment.email}</strong> {comment.body}
           </Typography>
         </Box>
       </Box>
 
-      {comment?.email === "Loresnoaus@airli.de" ? (
+      {comment?.email === webUser.email ? (
         <IconButton
           size="small"
           onClick={() => onDelete(comment.id)}

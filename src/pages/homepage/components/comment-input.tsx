@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Box, TextField, Button } from "@mui/material";
+import { webUser } from "../../../constants/user";
 import { type IComment } from "../../../types/comment";
 
 interface CommentInputProps {
@@ -7,9 +8,14 @@ interface CommentInputProps {
   onClick: (
     types: Pick<IComment, "postId" | "email" | "body">,
   ) => Promise<void>;
+  placeholder?: string;
 }
 
-export function CommentInput({ postId, onClick }: CommentInputProps) {
+export function CommentInput({
+  postId,
+  onClick,
+  placeholder,
+}: CommentInputProps) {
   const [text, setText] = useState("");
 
   const handleSubmit = async () => {
@@ -17,20 +23,25 @@ export function CommentInput({ postId, onClick }: CommentInputProps) {
 
     await onClick({
       postId,
-      email: "Loresnoaus@airli.de",
+      email: webUser.email,
       body: text,
     });
     setText("");
   };
 
   return (
-    <Box sx={{ marginTop: 2, display: "flex", gap: 1 }}>
+    <Box sx={{ display: "flex", gap: 1 }}>
       <TextField
         fullWidth
         size="small"
-        placeholder="Write a comment..."
+        placeholder={placeholder || "Write a comment..."}
         value={text}
         onChange={(c) => setText(c.target.value)}
+        sx={{
+          "& input::placeholder": {
+            fontSize: "13px",
+          },
+        }}
       />
       <Button
         variant="contained"
