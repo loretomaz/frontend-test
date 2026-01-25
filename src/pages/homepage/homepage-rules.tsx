@@ -3,6 +3,8 @@ import { getComments } from "../../api/comment";
 import { getPosts } from "../../api/post";
 import { getUsers } from "../../api/user";
 import { createComment } from "../../api/comment";
+import { createPost } from "../../api/post";
+import { webUser } from "../../constants/user";
 import { type IComment } from "../../types/comment";
 import { type IPost } from "../../types/post";
 import { type IUser } from "../../types/user";
@@ -12,6 +14,7 @@ export function useHomepage() {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [comments, setComments] = useState<IComment[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function loadData() {
@@ -21,11 +24,11 @@ export function useHomepage() {
           getPosts(),
           getComments(),
         ]);
-        setUsers(userList);
+        setUsers([...userList, webUser]);
         setPosts(postList);
         setComments(commentList);
-      } catch (error) {
-        console.error("Error loading data", error);
+      } catch {
+        setError("We were unable to load the data. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -41,13 +44,13 @@ export function useHomepage() {
   };
 
   const handleAddComment = async (
-    types: Pick<IComment, "postId" | "email" | "body">,
+    newCommentData: Pick<IComment, "postId" | "email" | "body">,
   ) => {
     try {
-      const newComment = await createComment(types);
+      const newComment = await createComment(newCommentData);
       setComments((prev) => [...prev, newComment]);
-    } catch (error) {
-      console.error("Error sending new comment", error);
+    } catch {
+      setError("We were unable to load the data. Please try again later.");
     }
   };
 
@@ -55,5 +58,26 @@ export function useHomepage() {
     setComments(comments.filter((c) => c.id !== commentId));
   };
 
-  return { posts, loading, getPostData, handleAddComment, handleDeleteComment };
+  const handleAddPost = async (newPostData: {
+    title: string;
+    body: string;
+    userId: number;
+  }) => {
+    try {
+      const newPost = await createPost(newPostData);
+      setPosts((prev) => [newPost, ...prev]);
+    } catch {
+      setError("We were unable to load the data. Please try again later.");
+    }
+  };
+
+  return {
+    posts,
+    loading,
+    error,
+    getPostData,
+    handleAddComment,
+    handleDeleteComment,
+    handleAddPost,
+  };
 }
