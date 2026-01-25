@@ -13,6 +13,7 @@ export function Homepage() {
     handleAddComment,
     handleAddPost,
     handleDeleteComment,
+    handleDeletePost,
   } = useHomepage();
 
   if (loading) {
@@ -51,6 +52,7 @@ export function Homepage() {
                 comments={postComments}
                 onAddComment={handleAddComment}
                 onDelete={handleDeleteComment}
+                onDeletePost={handleDeletePost}
               />
             );
           })}

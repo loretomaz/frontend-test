@@ -27,6 +27,11 @@ export const styles: Record<string, SxProps<Theme>> = {
     gap: "10px",
   },
 
+  deleteButton: {
+    color: "#aaaaaa",
+    "&:hover": { color: "#d32f2f" },
+  },
+
   loadingContainer: {
     alignItems: "center",
     display: "flex",
@@ -55,6 +60,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     justifyContent: "center",
     marginBottom: "20px",
     padding: 4,
+    position: "relative",
   },
 
   postHeader: {

@@ -65,10 +65,19 @@ export function useHomepage() {
   }) => {
     try {
       const newPost = await createPost(newPostData);
-      setPosts((prev) => [newPost, ...prev]);
+      const newIdForPost = {
+        ...newPost,
+        userId: newPostData.userId,
+        id: Date.now(),
+      };
+      setPosts((prev) => [newIdForPost, ...prev]);
     } catch {
       setError("We were unable to load the data. Please try again later.");
     }
+  };
+
+  const handleDeletePost = (postId: number) => {
+    setPosts(posts.filter((p) => p.id !== postId));
   };
 
   return {
@@ -79,5 +88,6 @@ export function useHomepage() {
     handleAddComment,
     handleDeleteComment,
     handleAddPost,
+    handleDeletePost,
   };
 }
