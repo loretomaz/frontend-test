@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { styles } from "../homepage-styles";
 import { CommentItem } from "./comment";
 import { CommentInput } from "./comment-input";
 import { webUser } from "../../../constants/user";
+import { styles } from "../homepage-styles";
 import { type IComment } from "../../../types/comment";
 import { type IPost } from "../../../types/post";
 import { type IUser } from "../../../types/user";
@@ -16,6 +16,7 @@ import {
   Divider,
   Menu,
   MenuItem,
+  Skeleton,
 } from "@mui/material";
 
 interface PostProps {
@@ -39,7 +40,8 @@ export function PostItem({
   onDelete,
   onDeletePost,
 }: PostProps) {
-  const imageUrl = `https://picsum.photos/seed/${post.id}blog/1980/800`;
+  const imageUrl = `https://picsum.photos/seed/${post.id}blog/800/400`;
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const [anchor, setAnchor] = useState<null | HTMLElement>(null);
   const open = Boolean(anchor);
@@ -102,42 +104,63 @@ export function PostItem({
         {post.body}
       </Typography>
 
+      {!imageLoaded && (
+        <Skeleton
+          variant="rectangular"
+          width="100%"
+          height={300}
+          sx={{ borderRadius: "5px", mb: 2 }}
+        />
+      )}
+
       <Box sx={{ width: "100%", mb: 2 }}>
         <Box
           component="img"
           src={imageUrl}
           alt={post.title}
-          sx={styles.images}
-        />
-        <Divider
-          textAlign="left"
+          loading="lazy"
+          onLoad={() => setImageLoaded(true)}
           sx={{
-            padding: 2,
+            ...styles.images,
+            opacity: imageLoaded ? 1 : 0,
+            transition: "opacity 0.5s ease-in-out",
+            height: imageLoaded ? "auto" : 0,
           }}
-        >
-          <Typography sx={{ fontSize: "14px", color: "#666" }}>
-            {comments.length === 0 ? "No comments yet..." : "Comments"}
-          </Typography>
-        </Divider>
+        />
 
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-          {comments.map((comment) => (
-            <CommentItem
-              key={comment.id}
-              comment={comment}
-              onDelete={onDelete}
-            />
-          ))}
-          <CommentInput
-            postId={post.id}
-            onClick={onAddComment}
-            placeholder={
-              comments.length === 0
-                ? "Be the first one to comment!"
-                : "Write a comment..."
-            }
-          />
-        </Box>
+        {imageLoaded && (
+          <>
+            <Divider
+              textAlign="left"
+              sx={{
+                padding: 2,
+              }}
+            >
+              <Typography sx={{ fontSize: "14px", color: "#666" }}>
+                {comments.length === 0 ? "No comments yet..." : "Comments"}
+              </Typography>
+            </Divider>
+
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {comments.map((comment) => (
+                <CommentItem
+                  key={comment.id}
+                  comment={comment}
+                  onDelete={onDelete}
+                />
+              ))}
+              <CommentInput
+                postId={post.id}
+                onClick={onAddComment}
+                placeholder={
+                  comments.length === 0
+                    ? "Be the first one to comment!"
+                    : "Write a comment..."
+                }
+              />
+            </Box>
+          </>
+        )}
       </Box>
     </Box>
   );
