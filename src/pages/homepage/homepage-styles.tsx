@@ -32,13 +32,26 @@ export const styles: Record<string, SxProps<Theme>> = {
     "&:hover": { color: "#d32f2f" },
   },
 
+  header: {
+    backgroundColor: "#ffffff",
+    borderBottom: "1px solid #e0e0e0",
+    boxShadow: "none",
+    color: "#000000",
+  },
+
+  headerToolbar: {
+    display: "flex",
+    justifyContent: "space-between",
+    minHeight: "65px",
+  },
+
   images: {
-    width: "100%",
+    borderRadius: "5px",
+    display: "block",
     height: "auto",
     maxHeight: "450px",
     objectFit: "cover",
-    borderRadius: "5px",
-    display: "block",
+    width: "100%",
   },
 
   loadingContainer: {
@@ -48,11 +61,17 @@ export const styles: Record<string, SxProps<Theme>> = {
     justifyContent: "center",
   },
 
+  logo: {
+    alignItems: "center",
+    display: "flex",
+    gap: 1,
+  },
+
   mainContent: {
-    flexGrow: 1,
-    padding: 4,
     backgroundColor: "#f5f5f5",
+    flexGrow: 1,
     overflowY: "auto",
+    padding: 4,
   },
 
   postAuthor: {
@@ -87,10 +106,11 @@ export const styles: Record<string, SxProps<Theme>> = {
   },
 
   sidebar: {
-    width: "800px",
-    padding: 4,
-    borderRight: "1px solid #e0e0e0",
     backgroundColor: "#ffffff",
+    borderRight: "1px solid #e0e0e0",
     overflowY: "auto",
+    padding: 3,
+    paddingTop: 2,
+    width: "800px",
   },
 };
