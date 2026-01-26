@@ -1,13 +1,22 @@
-import { Box, IconButton, Typography, Divider } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useState } from "react";
-import { type IComment } from "../../../types/comment";
-import { type IPost } from "../../../types/post";
-import { type IUser } from "../../../types/user";
-import { webUser } from "../../../constants/user";
 import { styles } from "../homepage-styles";
 import { CommentItem } from "./comment";
 import { CommentInput } from "./comment-input";
+import { webUser } from "../../../constants/user";
+import { type IComment } from "../../../types/comment";
+import { type IPost } from "../../../types/post";
+import { type IUser } from "../../../types/user";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import {
+  Box,
+  IconButton,
+  Typography,
+  Divider,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 
 interface PostProps {
   author?: IUser;
@@ -30,30 +39,61 @@ export function PostItem({
   onDelete,
   onDeletePost,
 }: PostProps) {
-  const [isHovering, setIsHovering] = useState(false);
   const imageUrl = `https://picsum.photos/seed/${post.id}blog/1980/800`;
 
+  const [anchor, setAnchor] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchor);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchor(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchor(null);
+  };
+
+  const handleDelete = () => {
+    onDeletePost(post.id);
+    handleClose();
+  };
+
   return (
-    <Box
-      sx={styles.postContainer}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
+    <Box sx={styles.postContainer}>
       <Box sx={styles.postHeader}>
         <Box sx={styles.avatar}>{author?.name.charAt(0).toUpperCase()}</Box>
         <Box sx={styles.postAuthor}>
           <strong>{author ? author.name : "User unknown..."}</strong>
           <Typography sx={{ fontSize: "15px" }}>{author?.email}</Typography>
         </Box>
+
         <Box sx={{ flexGrow: 1 }} />
-        {Number(post?.userId) === Number(webUser.id) && isHovering ? (
-          <IconButton
-            size="small"
-            onClick={() => onDeletePost(post.id)}
-            sx={styles.deleteButton}
-          >
-            <DeleteIcon />
-          </IconButton>
+        {Number(post?.userId) === Number(webUser.id) ? (
+          <>
+            <IconButton size="small" onClick={handleClick}>
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchor}
+              open={open}
+              onClose={handleClose}
+              transformOrigin={{ horizontal: "right", vertical: "top" }}
+              anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+            >
+              <MenuItem
+                onClick={handleDelete}
+                sx={{
+                  color: "#d32f2f",
+                  fontSize: "14px",
+                  gap: 1,
+                  alignItems: "center",
+                  display: "flex",
+                }}
+              >
+                <DeleteIcon fontSize="small" />
+                Delete
+              </MenuItem>
+            </Menu>
+          </>
         ) : null}
       </Box>
 

@@ -52,6 +52,9 @@ export function Sidebar({ onAddPost, users }: SidebarProps) {
               fontSize: "13px",
               padding: "10px",
             },
+            "& .MuiOutlinedInput-root": {
+              "&.Mui-focused fieldset": { borderColor: "#000" },
+            },
           }}
         />
         <TextField
@@ -66,6 +69,7 @@ export function Sidebar({ onAddPost, users }: SidebarProps) {
               fontSize: "13px",
             },
             "& .MuiOutlinedInput-root": {
+              "&.Mui-focused fieldset": { borderColor: "#000" },
               padding: "10px",
             },
           }}

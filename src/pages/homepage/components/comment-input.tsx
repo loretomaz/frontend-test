@@ -41,6 +41,9 @@ export function CommentInput({
           "& input::placeholder": {
             fontSize: "13px",
           },
+          "& .MuiOutlinedInput-root": {
+            "&.Mui-focused fieldset": { borderColor: "#000" },
+          },
         }}
       />
       <Button
